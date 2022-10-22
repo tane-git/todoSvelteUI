@@ -1,6 +1,5 @@
 <script>
-    // import todos from "/src/store.ts"
-    import { todos } from "../../store";
+    import { todos } from '../../store'
 
 	// let todos = [
 	// 	{ done: false, text: 'finish Svelte tutorial' },
@@ -9,42 +8,59 @@
 	// ];
 
 	function add() {
-		$todos.concat({ done: false, text: '' });
+		// todos = todos.concat({ done: false, text: '' });
+		todos.update(store => [...store, { done: false, text: '' }]);
 	}
 
-	function clear() {
-		$todos.filter(t => !t.done);
-	}
+	// function clear() {
+		// todos = todos.filter(t => !t.done);
+	// }
 
-	$: remaining = $todos.filter(t => !t.done).length;
+	// $: remaining = todos.filter(t => !t.done).length;
+
+    // function handleSubmit(stuff) {
+    //     console.log(stuff)
+    // }
+
 </script>
 
 <h1>Todos</h1>
 
-{#each $todos as todo}
-	<div class:done={todo.done}>
-		<input
-			type=checkbox
-			checked={todo.done}
-		>
+<form>
+    {#each $todos as todo}
+        <div class:done={todo.done}>
+            <input
+                type=checkbox
+                bind:checked={todo.done}
+            >
 
-		<input
-			placeholder="What needs to be done?"
-			value={todo.text}
-		>
-	</div>
-{/each}
+            <input
+                placeholder="What needs to be done?"
+                bind:value={todo.text}
+                name='text'
+            >
 
-<p>{remaining} remaining</p>
+        </div>
+    {/each}
+
+    <!-- <button type='submit'>
+    <button on:click|preventDefault={handleSubmit}>
+        Submit
+    </button>
+    -->
+
+</form>
+
+<!-- <p>{remaining} remaining</p> -->
 
 <button on:click={add}>
 	Add new
 </button>
 
-<button on:click={clear}>
+<!-- <button on:click={clear}>
 	Clear completed
 </button>
-
+ -->
 <style>
 	.done {
 		opacity: 0.4;
