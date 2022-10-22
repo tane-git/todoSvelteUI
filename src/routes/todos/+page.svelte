@@ -1,24 +1,27 @@
 <script>
-	let todos = [
-		{ done: false, text: 'finish Svelte tutorial' },
-		{ done: false, text: 'build an app' },
-		{ done: false, text: 'world domination' }
-	];
+    // import todos from "/src/store.ts"
+    import { todos } from "../../store";
+
+	// let todos = [
+	// 	{ done: false, text: 'finish Svelte tutorial' },
+	// 	{ done: false, text: 'build an app' },
+	// 	{ done: false, text: 'world domination' }
+	// ];
 
 	function add() {
-		todos = todos.concat({ done: false, text: '' });
+		$todos.concat({ done: false, text: '' });
 	}
 
 	function clear() {
-		todos = todos.filter(t => !t.done);
+		$todos.filter(t => !t.done);
 	}
 
-	$: remaining = todos.filter(t => !t.done).length;
+	$: remaining = $todos.filter(t => !t.done).length;
 </script>
 
 <h1>Todos</h1>
 
-{#each todos as todo}
+{#each $todos as todo}
 	<div class:done={todo.done}>
 		<input
 			type=checkbox
